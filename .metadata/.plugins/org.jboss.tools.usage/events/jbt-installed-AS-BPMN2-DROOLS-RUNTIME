@@ -1,0 +1,10 @@
+#Mon May 13 20:38:37 SAST 2019
+ct=jbt
+a=installed
+c=1
+s=0
+d=1557772717311
+v=2.2.202
+cmp=usage
+cl=AS-BPMN2-DROOLS-RUNTIME
+l=Installed plugins\: AS-BPMN2-DROOLS-RUNTIME
