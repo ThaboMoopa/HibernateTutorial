@@ -12,11 +12,9 @@ import domain.Address;
 
 import java.util.List;
 
-
-
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList; 
@@ -25,7 +23,7 @@ public class CustomerTest {
 
 	public static void main(String[] args) {
 		
-		Transaction transaction = null;
+		
 		//Configuration file form the XML conf
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		
@@ -61,13 +59,36 @@ public class CustomerTest {
 			customer.setBankDetails(bankList);
 
 			//new transaction is created 
-			transaction = session.beginTransaction(); 
+			session.beginTransaction(); 
 			
-			//saving the object
-			session.save(customer);
-			session.save(bankDetails); 
-			session.save(address); 
+			//Writing queries in hibernate (HQL - Hibernate query language)
+			Query query = session.createQuery("from Customer WHERE name LIKE '%John' AND id=4");
 			
+			//executing the query, returns a list of customers in the database 
+			List<Customer> customers = query.list(); 
+			
+			//Print out the size of the list coming from the database
+			System.out.println("\n\nSize of the list: " + customers.size() + "\n\n"); 
+			
+			//Use an enhanced for loop to retrieve the customer details
+			System.out.println("********Customer Details********"); 
+			for(Customer cust: customers)
+			{
+				System.out.println(cust.getId());
+				System.out.println(cust.getName());
+				System.out.println(cust.getSurname()); 
+				System.out.println(cust.getPassword());
+				System.out.println(cust.getAddress());
+				System.out.println(cust.getBankDetails()); 
+			}
+			
+			System.out.println("********End of Report***********\n\n"); 
+			
+//			//saving the object
+//			session.save(customer);
+//			session.save(bankDetails); 
+//			session.save(address); 
+//			
 			
 			//Commit the transaction to POSTGRES		
 			session.getTransaction().commit();
@@ -106,7 +127,7 @@ public class CustomerTest {
 			
 			
 			
-			//Writing queries in hibernate (HQL - Hibernate query language)
+			
 			
 			
 			
