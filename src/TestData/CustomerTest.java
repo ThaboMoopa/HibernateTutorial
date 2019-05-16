@@ -19,6 +19,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList; 
 
+@SuppressWarnings("deprecation")
 public class CustomerTest {
 
 	public static void main(String[] args) {
@@ -31,30 +32,31 @@ public class CustomerTest {
 		
 		try {
 			BankDetails bankDetails = new BankDetails();
-			bankDetails.setName("Standard Bank");
+			bankDetails.setName("First National Bank");
 			bankDetails.setAccountNumber(4080650678l);
 			bankDetails.setBranchCode(6300534); 
-			
-			Address address = new Address();
-			address.setStreet("Paul");
-			address.setPostalCode(0152);
-			address.setHouseNumber(6);
-			address.setProvince("Western Cape");
-			address.setCity("Kraaifontein");
-			address.setDescription("Its a house not a flat"); 
-			
-			List<Address> addressList = new ArrayList<>(); 
-			addressList.add(address); 
 			
 			List<BankDetails> bankList = new ArrayList<>(); 
 			bankList.add(bankDetails); 
 			
+
+			Address address = new Address();
+			address.setStreet("Xami");
+			address.setPostalCode(0152);
+			address.setHouseNumber(6);
+			address.setProvince("Northen Cape");
+			address.setCity("Kurumane");
+			address.setDescription("Flat"); 
+			
+			List<Address> addressList = new ArrayList<>(); 
+			addressList.add(address); 
+			
 			Customer customer = new Customer(); 
-			customer.setName("John"); 
-			customer.setSurname("John");
-			customer.setPassword("mysqlmysql");
-			customer.setEmail("john.moopa@gmail.com");
-			customer.setContact("0849262255");
+			customer.setName("Thembi"); 
+			customer.setSurname("Thembi");
+			customer.setPassword("mysql");
+			customer.setEmail("thembi.moopa@gmail.com");
+			customer.setContact("0849262266");
 			customer.setAddress(addressList);
 			customer.setBankDetails(bankList);
 
@@ -62,7 +64,7 @@ public class CustomerTest {
 			session.beginTransaction(); 
 			
 			//Writing queries in hibernate (HQL - Hibernate query language)
-			Query query = session.createQuery("from Customer WHERE name LIKE '%John' AND id=4");
+			Query query = session.createQuery("from Customer WHERE name LIKE 'John%' AND id=4");
 			
 			//executing the query, returns a list of customers in the database 
 			List<Customer> customers = query.list(); 
@@ -85,8 +87,10 @@ public class CustomerTest {
 			System.out.println("********End of Report***********\n\n"); 
 			
 //			//saving the object
-//			session.save(customer);
-//			session.save(bankDetails); 
+			session.persist(customer);
+			
+			Customer customer2 = session.get(Customer.class, 7); 
+			session.delete(customer2);  
 //			session.save(address); 
 //			
 			
@@ -95,6 +99,27 @@ public class CustomerTest {
 			
 			//Use the same factory class to start a new instance of the object
 			session = sessionFactory.openSession(); 
+			
+			//Start a new transactions
+			session.beginTransaction(); 
+			
+			//Using joins to query two tables in Hibernate
+			Query query2 = session.createQuery("FROM Customer c JOIN Address a ON c.id = a.id"); 
+			
+			List<Customer> customs = query2.list(); 
+			
+			for(Customer custom: customs)
+			{
+				System.out.println("***********NEW TRANSACTION"  + customs.toString()); 
+			}
+			
+			
+			//Commit the transaction to the DB
+			session.getTransaction().commit(); 
+			
+			
+			
+			
 			
 			//new transaction is created 
 			session.beginTransaction(); 
@@ -125,13 +150,7 @@ public class CustomerTest {
 			//Output the data in the console 
 			System.out.println(customer.toString());
 			
-			
-			
-			
-			
-			
-			
-			
+
 		}
 		catch(Exception e)
 		{

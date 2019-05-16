@@ -39,18 +39,18 @@ public class BankDetails {
 	
 	
 	//Reference Type
-//	@ManyToOne
-//	private Customer customer; 
-//	
-//	public void setCustomer(Customer customer)
-//	{
-//		this.customer = customer; 
-//	}
-//	
-//	public Customer getcustomer()
-//	{
-//		return customer; 
-//	}
+	@ManyToOne
+	private Customer customer; 
+	
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer; 
+	}
+	
+	public Customer getcustomer()
+	{
+		return customer; 
+	}
 	/**
 	 * 
 	 * Setters and getters for the bank details attributes

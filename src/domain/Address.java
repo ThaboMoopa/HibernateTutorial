@@ -47,22 +47,22 @@ public class Address {
 	@Lob 
 	private String description; 
 	
-//	@ManyToOne
-//	private Customer customer;
+	@ManyToOne
+	private Customer customer;
 	
 	
 	/**
 	 * Setters and getters for the address attributes
 	 * @param
 	 */
-//	public void setCustomer(Customer customer)
-//	{
-//		this.customer = customer; 
-//	}
-//	
-//	public Customer getCustomer() {
-//		return customer;
-//	}
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer; 
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
 	
 	
 	/**

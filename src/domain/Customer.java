@@ -8,6 +8,8 @@
 package domain;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,10 +50,10 @@ public class Customer {
 	private String surname; 
 	
 	//creating bank ID for the Collection of the ArrayList using annotations
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<BankDetails> bankDetails; 
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<Address> address;
 	
 	/**
